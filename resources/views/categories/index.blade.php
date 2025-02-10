@@ -11,6 +11,11 @@
     <div class="container mt-4">
         <h2>Category List</h2>
         
+        <div class="mb-3">
+            <a href="/v1" class="btn btn-secondary">Dashboard</a>
+            <a href="/blog" class="btn btn-success">Buat Blog</a>
+        </div>
+        
         <button class="btn btn-primary mb-3" id="addCategoryBtn">Add Category</button>
         
         <table class="table table-bordered" id="categoryTable">

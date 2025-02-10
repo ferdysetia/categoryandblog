@@ -34,3 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/categories/update', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
+
+// Di routes/web.php
+Route::get('/', [BlogController::class, 'showWelcomePage'])->name('welcome');

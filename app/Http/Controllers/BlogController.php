@@ -64,4 +64,16 @@ class BlogController extends Controller
         $blog->delete();
         return redirect()->route('blog.index');
     }
+
+
+
+    public function showWelcomePage()
+    {
+        // Ambil semua blog
+        $blogs = Blog::with('category')->get();
+
+        // Kirim data blog ke view welcome
+        return view('welcome', compact('blogs'));
+    }
+
 }
