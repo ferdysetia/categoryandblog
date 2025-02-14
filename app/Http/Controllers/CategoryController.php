@@ -50,7 +50,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
             
             $category = Category::create([
-                'tetete' => $request->title,
+                'title' => $request->title,
                 'slug' => Str::slug($request->title),
                 'user_id' => auth()->id(),
             ]);
