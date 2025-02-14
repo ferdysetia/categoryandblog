@@ -83,7 +83,8 @@
                 let title = $('#categoryTitle').val();
                 let url = id ? "{{ route('categories.update') }}" : "{{ route('categories.store') }}";
 
-                $.post(url, { id, title, _token: "{{ csrf_token() }}" }, function(response) {
+                $.post(url, { id, title, _token: "{{ csrf_token() }}" })
+                .done(function(response) {
                     $('#categoryModal').modal('hide');
                     table.ajax.reload();
                     Swal.fire({
@@ -92,6 +93,19 @@
                         text: id ? 'Kategori berhasil diperbarui!' : 'Kategori berhasil ditambahkan!',
                         timer: 1500,
                         showConfirmButton: false
+                    });
+                })
+                .fail(function(xhr) {
+                    let errorMessage = 'Terjadi kesalahan saat menyimpan kategori.';
+                    
+                    if (xhr.responseJSON) {
+                        errorMessage = xhr.responseJSON.message || errorMessage;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: errorMessage,
                     });
                 });
             });

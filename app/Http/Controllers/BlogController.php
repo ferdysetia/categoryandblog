@@ -13,8 +13,8 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('category')->get();  // Mengambil semua blog dengan kategori
-        $categories = Category::all();          // Mengambil semua kategori
+        $blogs = Blog::with('category')->get();  
+        $categories = Category::all(); 
         return view('blog.index', compact('blogs', 'categories'));
     }
 
