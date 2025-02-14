@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\DB;
 
->>>>>>> 27baec4 (Entah commit ke berapa)
 class CategoryController extends Controller
 {
     public function index()
@@ -44,21 +41,6 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255|unique:categories,title',
         ]);
-<<<<<<< HEAD
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $category = Category::create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'user_id' => auth()->id(),
-        ]);
-
-        return response()->json(['success' => 'Category added successfully!', 'category' => $category]);
-    }
-=======
     
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -81,7 +63,6 @@ class CategoryController extends Controller
             return response()->json(['error' => 'Failed to add category', 'message' => $e->getMessage()], 500);
         }
     }    
->>>>>>> 27baec4 (Entah commit ke berapa)
 
     public function update(Request $request)
     {
@@ -89,20 +70,6 @@ class CategoryController extends Controller
             'id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255|unique:categories,title,'.$request->id,
         ]);
-<<<<<<< HEAD
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $category = Category::find($request->id);
-        $category->update([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-        ]);
-
-        return response()->json(['success' => 'Category updated successfully!', 'category' => $category]);
-=======
     
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -124,19 +91,10 @@ class CategoryController extends Controller
             DB::rollBack();
             return response()->json(['error' => 'Failed to update category', 'message' => $e->getMessage()], 500);
         }
->>>>>>> 27baec4 (Entah commit ke berapa)
     }
 
     public function destroy(Request $request)
     {
-<<<<<<< HEAD
-        $category = Category::find($request->id);
-        if ($category) {
-            $category->delete();
-            return response()->json(['success' => 'Category deleted successfully!']);
-        }
-        return response()->json(['error' => 'Category not found!'], 404);
-=======
         try {
             DB::beginTransaction();
             
@@ -153,6 +111,5 @@ class CategoryController extends Controller
             DB::rollBack();
             return response()->json(['error' => 'Failed to delete category', 'message' => $e->getMessage()], 500);
         }
->>>>>>> 27baec4 (Entah commit ke berapa)
     }
 }

@@ -6,10 +6,7 @@
     <title>Category Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<<<<<<< HEAD
-=======
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
->>>>>>> 27baec4 (Entah commit ke berapa)
 </head>
 <body>
     <div class="container mt-4">
@@ -89,8 +86,6 @@
                 $.post(url, { id, title, _token: "{{ csrf_token() }}" }, function(response) {
                     $('#categoryModal').modal('hide');
                     table.ajax.reload();
-<<<<<<< HEAD
-=======
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
@@ -98,7 +93,6 @@
                         timer: 1500,
                         showConfirmButton: false
                     });
->>>>>>> 27baec4 (Entah commit ke berapa)
                 });
             });
 
@@ -111,14 +105,6 @@
 
             $(document).on('click', '.deleteCategory', function() {
                 let id = $(this).data('id');
-<<<<<<< HEAD
-                $.ajax({
-                    url: "{{ route('categories.destroy') }}",
-                    type: "DELETE",
-                    data: { id, _token: "{{ csrf_token() }}" },
-                    success: function() {
-                        table.ajax.reload();
-=======
                 
                 Swal.fire({
                     title: "Apakah Anda yakin?",
@@ -145,7 +131,6 @@
                                 });
                             }
                         });
->>>>>>> 27baec4 (Entah commit ke berapa)
                     }
                 });
             });
