@@ -7,6 +7,11 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\DB;
+
+>>>>>>> 27baec4 (Entah commit ke berapa)
 class BlogController extends Controller
 {
     public function index()
@@ -25,6 +30,7 @@ class BlogController extends Controller
             'body' => 'required|string',
             'status' => 'required|in:publish,draft',
         ]);
+<<<<<<< HEAD
 
         Blog::create([
             'user_id' => Auth::id(),
@@ -36,6 +42,28 @@ class BlogController extends Controller
         ]);
 
         return redirect()->route('blog.index');
+=======
+    
+        try {
+            DB::beginTransaction();
+            
+            Blog::create([
+                'user_id' => Auth::id(),
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'summary' => $request->summary,
+                'body' => $request->body,
+                'status' => $request->status,
+            ]);
+    
+            DB::commit();
+            
+            return redirect()->route('blog.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Failed to create blog post', 'message' => $e->getMessage()]);
+        }
+>>>>>>> 27baec4 (Entah commit ke berapa)
     }
 
     public function update(Request $request, Blog $blog)
@@ -61,11 +89,27 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
+<<<<<<< HEAD
         $blog->delete();
         return redirect()->route('blog.index');
     }
 
 
+=======
+        try {
+            DB::beginTransaction();
+            
+            $blog->delete();
+            
+            DB::commit();
+            
+            return redirect()->route('blog.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Failed to delete blog post', 'message' => $e->getMessage()]);
+        }
+    }    
+>>>>>>> 27baec4 (Entah commit ke berapa)
 
     public function showWelcomePage()
     {
