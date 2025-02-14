@@ -37,5 +37,5 @@ Route::middleware(['auth'])->group(function () {
 
 // Di routes/web.php
 Route::get('/', [BlogController::class, 'showWelcomePage'])->name('welcome');
-
 Route::get('blog/{blog}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog/{blog}/edit', [BlogController::class, 'edit'])->name('blog.edit');

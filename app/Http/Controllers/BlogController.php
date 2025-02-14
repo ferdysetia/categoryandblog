@@ -69,16 +69,38 @@ class BlogController extends Controller
             'body' => 'required|string',
             'status' => 'required|in:publish,draft',
         ]);
+    
+        try {
+            DB::beginTransaction();
+    
+            $blog->update([
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'summary' => $request->summary,
+                'body' => $request->body,
+                'status' => $request->status,
+            ]);
+    
+            DB::commit();
+    
+            return redirect()->route('blog.index')->with('success', 'Blog berhasil diperbarui');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors('Terjadi kesalahan saat memperbarui blog: ' . $e->getMessage());
+        }
+    }
 
-        $blog->update([
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'summary' => $request->summary,
-            'body' => $request->body,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('blog.index');
+    public function edit(Blog $blog)
+    {
+        try {
+            return DB::transaction(function () use ($blog) {
+                $categories = Category::all();
+                return view('blog.edit', compact('blog', 'categories'));
+            });
+        } catch (\Exception $e) {
+            Log::error('Error saat mengambil data blog: ' . $e->getMessage());
+            return redirect()->route('blog.index')->with('error', 'Terjadi kesalahan saat memuat halaman edit.');
+        }
     }
 
     public function destroy(Blog $blog)
